@@ -12,21 +12,21 @@ class App extends React.Component {
           price: 99,
           title: "Watch",
           qty: 1,
-          image: '',
+          image: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80',
           id: 1
         },
         {
           price: 999,
           title: "Mobile Phone",
           qty: 10,
-          image: '',
+          image: 'https://images.unsplash.com/photo-1509395062183-67c5ad6faff9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80',
           id: 2
         },
         {
           price: 9999,
           title: "Laptop",
           qty: 4,
-          image: '',
+          image: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=751&q=80',
           id: 3
         }
       ]
@@ -84,6 +84,19 @@ class App extends React.Component {
     return count;
   }
 
+  getCartTotal = () => {
+    const {products} = this.state;
+
+    let cartTotal = 0;
+
+    products.forEach((product) => {
+      cartTotal += product.qty * product.price;
+    })
+
+    return cartTotal;
+
+  }
+
   render() {
 
     const {products} = this.state;
@@ -96,7 +109,11 @@ class App extends React.Component {
          onIncreaseQuantity = {this.handleIncreaseQuantity}
          onDecreaseQuantity = {this.handleDecreaseQuantity}
          onDeleteQuantity = {this.handleDeleteQuantity} />
+         <div style = {{fontSize: 20, padding: 10}}>
+           TOTAL: {this.getCartTotal()}
+         </div>
       </div>
+      
     );
   }
 
