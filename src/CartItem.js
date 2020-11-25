@@ -1,21 +1,99 @@
 import React from 'react';
 
 class CartItem extends React.Component {
-    render(){
+    constructor() {
+        super();
+        this.state = {
+            price: 999,
+            title: "Mobile Phone",
+            qty: 1,
+            image: ''
+        }
+    }
+
+    // this.decreaseQuantity = this.decreaseQuantity.bind(this);
+
+    increaseQuantity = () => {
+
+        // in react we cant directly mutate the state we require a setState function to do tso because this wont render the state to react
+        //this.state.qty = this.state.qty + 1;
+        // console.log('this',this.state);
+
+        //set state form 1, generally for things that dont require previous states and also it returns an object
+        // this.setState ({
+        //     qty: this.state.qty + 1
+        // }, () =>{
+        // to avoid async commands setstate provide us with call back function in this as well as other form also
+        //})
+
+        //setState Form 2, use this if you require prev state
+        this.setState((prevState) => {
+            return {
+                qty: prevState.qty + 1
+            }
+        }, () => {
+            console.log(this.state);
+        })
+
+    }
+
+    decreaseQuantity = () => {
+
+        const { qty } = this.state;
+        if (qty === 0) {
+            return;
+        }
+        this.setState((prevState) => {
+            return {
+                qty: prevState.qty - 1
+            }
+        })
+    }
+
+
+
+    resetQuantity = () => {
+        this.setState({
+            qty: 0
+        })
+    }
+
+
+
+    render() {
+        const { price, title, qty } = this.state;
         return (
             <div className="cart-item">
-                <div className = "left-block">
-                    <img style = {styles.image}/>
+                <div className="left-block">
+                    <img style={styles.image} />
                 </div>
-                <div className = "right-block">
-                    <div style = { { fontSize: 25 } }>Phone</div>
-                    <div style = { { color: '#777' } }>Rs 999</div>
-                    <div style = { { color: '#777' } }>Qty: 1</div>
-                    <div className = "cart-item-actions">
+                <div className="right-block">
+                    <div style={{ fontSize: 25 }}>{title}</div>
+                    <div style={{ color: '#777' }}>Rs {price}</div>
+                    <div style={{ color: '#777' }}>Qty: {qty}</div>
+                    <div className="cart-item-actions">
                         {/* buttons */}
+                        <img
+                            src="https://www.flaticon.com/svg/static/icons/svg/864/864373.svg"
+                            alt="decrease"
+                            className="action-icons"
+                            onClick={this.decreaseQuantity}
+                        />
+
+                        <img
+                            src="https://www.flaticon.com/svg/static/icons/svg/864/864378.svg"
+                            alt="decrease"
+                            className="action-icons"
+                            onClick={this.increaseQuantity} />
+
+                        <img
+                            src="https://www.flaticon.com/svg/static/icons/svg/3209/3209887.svg"
+                            alt="decrease"
+                            className="action-icons"
+                            onClick={this.resetQuantity} />
                     </div>
                 </div>
-            </div> 
+            </div>
         );
     }
 }
