@@ -1,60 +1,10 @@
 import React from 'react';
 
-class CartItem extends React.Component {
+const CartItem = (props) => {
 
-    // this.decreaseQuantity = this.decreaseQuantity.bind(this);
-
-    // increaseQuantity = () => {
-
-    //     // in react we cant directly mutate the state we require a setState function to do tso because this wont render the state to react
-    //     //this.state.qty = this.state.qty + 1;
-    //     // console.log('this',this.state);
-
-    //     //set state form 1, generally for things that dont require previous states and also it returns an object
-    //     // this.setState ({
-    //     //     qty: this.state.qty + 1
-    //     // }, () =>{
-    //     // to avoid async commands setstate provide us with call back function in this as well as other form also
-    //     //})
-
-    //     //setState Form 2, use this if you require prev state
-    //     this.setState((prevState) => {
-    //         return {
-    //             qty: prevState.qty + 1
-    //         }
-    //     }, () => {
-    //         console.log(this.state);
-    //     })
-
-    // }
-
-    // decreaseQuantity = () => {
-
-    //     const { qty } = this.state;
-    //     if (qty === 0) {
-    //         return;
-    //     }
-    //     this.setState((prevState) => {
-    //         return {
-    //             qty: prevState.qty - 1
-    //         }
-    //     })
-    // }
-
-
-
-    // resetQuantity = () => {
-    //     this.setState({
-    //         qty: 0
-    //     })
-    // }
-
-
-
-    render() {
         // console.log(this.props);
-        const { price, title, qty } = this.props.product;
-        const {product,onDecreaseQuantity,onIncreaseQuantity,onDeleteQuantity} = this.props;
+        const { price, title, qty } = props.product;
+        const {product,onDecreaseQuantity,onIncreaseQuantity,onDeleteQuantity} = props;
         return (
             <div className="cart-item">
                 <div className="left-block">
@@ -88,7 +38,7 @@ class CartItem extends React.Component {
             </div>
         );
     }
-}
+
 
 const styles = {
     image: {
