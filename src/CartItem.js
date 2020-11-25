@@ -1,67 +1,60 @@
 import React from 'react';
 
 class CartItem extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            price: 999,
-            title: "Mobile Phone",
-            qty: 1,
-            image: ''
-        }
-    }
 
     // this.decreaseQuantity = this.decreaseQuantity.bind(this);
 
-    increaseQuantity = () => {
+    // increaseQuantity = () => {
 
-        // in react we cant directly mutate the state we require a setState function to do tso because this wont render the state to react
-        //this.state.qty = this.state.qty + 1;
-        // console.log('this',this.state);
+    //     // in react we cant directly mutate the state we require a setState function to do tso because this wont render the state to react
+    //     //this.state.qty = this.state.qty + 1;
+    //     // console.log('this',this.state);
 
-        //set state form 1, generally for things that dont require previous states and also it returns an object
-        // this.setState ({
-        //     qty: this.state.qty + 1
-        // }, () =>{
-        // to avoid async commands setstate provide us with call back function in this as well as other form also
-        //})
+    //     //set state form 1, generally for things that dont require previous states and also it returns an object
+    //     // this.setState ({
+    //     //     qty: this.state.qty + 1
+    //     // }, () =>{
+    //     // to avoid async commands setstate provide us with call back function in this as well as other form also
+    //     //})
 
-        //setState Form 2, use this if you require prev state
-        this.setState((prevState) => {
-            return {
-                qty: prevState.qty + 1
-            }
-        }, () => {
-            console.log(this.state);
-        })
+    //     //setState Form 2, use this if you require prev state
+    //     this.setState((prevState) => {
+    //         return {
+    //             qty: prevState.qty + 1
+    //         }
+    //     }, () => {
+    //         console.log(this.state);
+    //     })
 
-    }
+    // }
 
-    decreaseQuantity = () => {
+    // decreaseQuantity = () => {
 
-        const { qty } = this.state;
-        if (qty === 0) {
-            return;
-        }
-        this.setState((prevState) => {
-            return {
-                qty: prevState.qty - 1
-            }
-        })
-    }
+    //     const { qty } = this.state;
+    //     if (qty === 0) {
+    //         return;
+    //     }
+    //     this.setState((prevState) => {
+    //         return {
+    //             qty: prevState.qty - 1
+    //         }
+    //     })
+    // }
 
 
 
-    resetQuantity = () => {
-        this.setState({
-            qty: 0
-        })
-    }
+    // resetQuantity = () => {
+    //     this.setState({
+    //         qty: 0
+    //     })
+    // }
 
 
 
     render() {
-        const { price, title, qty } = this.state;
+        // console.log(this.props);
+        const { price, title, qty } = this.props.product;
+        const {product,onDecreaseQuantity,onIncreaseQuantity,onDeleteQuantity} = this.props;
         return (
             <div className="cart-item">
                 <div className="left-block">
@@ -77,20 +70,19 @@ class CartItem extends React.Component {
                             src="https://www.flaticon.com/svg/static/icons/svg/864/864373.svg"
                             alt="decrease"
                             className="action-icons"
-                            onClick={this.decreaseQuantity}
-                        />
+                            onClick={() => onDecreaseQuantity(product)}/>
 
                         <img
                             src="https://www.flaticon.com/svg/static/icons/svg/864/864378.svg"
                             alt="decrease"
                             className="action-icons"
-                            onClick={this.increaseQuantity} />
+                            onClick={() => onIncreaseQuantity(product)} />
 
                         <img
                             src="https://www.flaticon.com/svg/static/icons/svg/3209/3209887.svg"
                             alt="decrease"
                             className="action-icons"
-                            onClick={this.resetQuantity} />
+                            onClick={() => onDeleteQuantity(product.id)} />
                     </div>
                 </div>
             </div>
