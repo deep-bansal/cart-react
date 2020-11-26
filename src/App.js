@@ -1,36 +1,69 @@
 import React from 'react';
 import Cart from './Cart';
 import Navbar from './Navbar';
+import firebase from 'firebase';
 
 class App extends React.Component {
 
   constructor() {
     super();
     this.state = {
-      products: [
-        {
-          price: 99,
-          title: "Watch",
-          qty: 1,
-          image: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80',
-          id: 1
-        },
-        {
-          price: 999,
-          title: "Mobile Phone",
-          qty: 10,
-          image: 'https://images.unsplash.com/photo-1509395062183-67c5ad6faff9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80',
-          id: 2
-        },
-        {
-          price: 9999,
-          title: "Laptop",
-          qty: 4,
-          image: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=751&q=80',
-          id: 3
-        }
-      ]
+      products: [],
+      loading: true
     }
+  }
+
+ 
+
+  componentDidMount() {
+
+    //here refreshing doesn't takes place therefor we goona apply another method of onsnapshot
+    // firebase
+    // .firestore()
+    // .collection('products')
+    // .get()
+    // .then((snapshot) => {
+    //   console.log('hii');
+    //   console.log(snapshot);
+
+    //   snapshot.docs.map((doc) => {
+    //     console.log(doc.data());
+    //   });
+
+    //   const products = snapshot.docs.map((doc) => {
+    //     const data = doc.data();
+    //     data['id'] = doc.id;
+    //     return data;
+    //   })
+
+    //   this.setState({
+    //     products,
+    //     loading : false
+    //   })
+    // })
+
+    firebase
+    .firestore()
+    .collection('products')
+    .onSnapshot((snapshot) => {
+      console.log('hii');
+      console.log(snapshot);
+
+      snapshot.docs.map((doc) => {
+        console.log(doc.data());
+      });
+
+      const products = snapshot.docs.map((doc) => {
+        const data = doc.data();
+        data['id'] = doc.id;
+        return data;
+      })
+
+      this.setState({
+        products,
+        loading : false
+      })
+    })
   }
 
   handleIncreaseQuantity = (product) => {
@@ -58,7 +91,8 @@ class App extends React.Component {
     products[index].qty -= 1;
 
     this.setState({
-      products
+      products,
+      
     })
   }
 
@@ -99,7 +133,7 @@ class App extends React.Component {
 
   render() {
 
-    const {products} = this.state;
+    const {products, loading} = this.state;
     return (
 
       <div className="App">
@@ -109,6 +143,7 @@ class App extends React.Component {
          onIncreaseQuantity = {this.handleIncreaseQuantity}
          onDecreaseQuantity = {this.handleDecreaseQuantity}
          onDeleteQuantity = {this.handleDeleteQuantity} />
+         {loading && <h1>Loading Products ...</h1>}
          <div style = {{fontSize: 20, padding: 10}}>
            TOTAL: {this.getCartTotal()}
          </div>

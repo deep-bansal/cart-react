@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import firebase from 'firebase';
-import 'firebase/firestore';
+require("firebase/firestore");
 
-const firebaseConfig = {
+var firebaseConfig = {
   apiKey: "AIzaSyArkfp1N5rffJOKDz80Njm-ScnX5rQFpmE",
   authDomain: "cart-789d1.firebaseapp.com",
   databaseURL: "https://cart-789d1.firebaseio.com",
@@ -24,4 +24,3 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 );
-
