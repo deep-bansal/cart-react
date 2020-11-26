@@ -102,22 +102,47 @@ class App extends React.Component {
       return;
     }
 
-    products[index].qty -= 1;
+    // products[index].qty -= 1;
 
-    this.setState({
-      products,
+    // this.setState({
+    //   products,
       
+    // })
+
+    const docRef = this.db.collection('products').doc(products[index].id);
+
+    docRef
+    .update({
+      qty: products[index].qty - 1
+    })
+    .then(() =>{
+      console.log("Updated Successfully");      
+    }) 
+    .catch((error)=>{
+      console.log("Error in updating",error);
     })
   }
 
   handleDeleteQuantity = (id) => {
-    const { products } = this.state;
+    // const { products } = this.state;
 
-    const items = products.filter((item) => item.id !== id); // it will return me products in form of array whose id != given id
+    // const items = products.filter((item) => item.id !== id); // it will return me products in form of array whose id != given id
 
-    this.setState({
-      products: items
+    // this.setState({
+    //   products: items
+    // })
+
+    const docRef = this.db.collection('products').doc(id);
+
+    docRef
+    .delete()
+    .then(() =>{
+      console.log("Deleted Successfully");      
+    }) 
+    .catch((error)=>{
+      console.log("Error in updating",error);
     })
+    
   }
 
   getCartCount = () =>{
